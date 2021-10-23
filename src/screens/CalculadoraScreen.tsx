@@ -3,6 +3,7 @@ import { View, Text } from 'react-native';
 import { BotonCalc } from '../components/BotonCalc';
 import { styles } from '../theme/appTheme';
 import { useState } from 'react';
+import { tsNumberKeyword } from '@babel/types';
 
 export const CalculadoraScreen = () => {
 
@@ -11,7 +12,6 @@ export const CalculadoraScreen = () => {
     const [numeroAnterior, setNumeroAnterior] = useState('0')
 
     const limpiar = () => {
-        console.log("entré");
         setNumero('0');
     }
 
@@ -48,6 +48,15 @@ export const CalculadoraScreen = () => {
         }
     }
 
+    const btnDelete = () => {
+
+        if (numero.length === 2 && numero.includes('-')) {
+            setNumero('0')
+        } else {
+            setNumero(numero.length === 1 ? '0' : numero.slice(0, -1))
+        }
+    }
+
     return (
         <View style={styles.calculadoraContainer}>
             <Text style={styles.resultadoPequeno}> {numeroAnterior}</Text>
@@ -63,7 +72,7 @@ export const CalculadoraScreen = () => {
             <View style={styles.fila}>
                 <BotonCalc texto="C" color="#9B9B9B" accion={limpiar} />
                 <BotonCalc texto="+/-" color="#9B9B9B" accion={positivoNegativo} />
-                <BotonCalc texto="del" color="#9B9B9B" accion={limpiar} />
+                <BotonCalc texto="del" color="#9B9B9B" accion={btnDelete} />
                 <BotonCalc texto="/" color="#FF9427" accion={limpiar} />
             </View>
             <View style={styles.fila}>
